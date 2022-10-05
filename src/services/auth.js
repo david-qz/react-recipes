@@ -17,5 +17,5 @@ export async function signIn(email, password) {
 }
 
 export async function signOut() {
-  client.auth.signOut();
+  await client.auth.signOut();
 }
