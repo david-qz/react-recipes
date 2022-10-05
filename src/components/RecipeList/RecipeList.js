@@ -1,23 +1,11 @@
 import { Redirect } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
-import { useRecipes } from '../hooks/useRecipes';
-import { useState } from 'react';
-import Modal from '../Modal/Modal';
+import { useAllRecipes } from '../hooks/useAllRecipes';
 import RecipeCard from '../RecipeCard/RecipeCard';
-import RecipeForm from '../RecipeForm/RecipeForm';
 
-export default function RecipeList() {
+export default function RecipeList({ recipes }) {
   const { user } = useUser();
-  const { recipes, error, loading } = useRecipes();
-  const [isAdding, setIsAdding] = useState(false);
-
-  const handleClick = () => {
-    setIsAdding(true);
-  };
-
-  const handleSubmit = (data) => {
-    // pass
-  };
+  const { error, loading } = useAllRecipes();
 
   if (!user) return <Redirect to='/auth/sign-in' />;
   if (loading) return <h2>Loading...</h2>;
@@ -25,11 +13,9 @@ export default function RecipeList() {
 
   return (
     <>
-      <button onClick={handleClick}>add recipe</button>
       <div className='recipe-list'>
         {recipes.map((recipe) => <RecipeCard key={recipe.id} {...recipe} />)}
       </div>
-      {isAdding && <Modal><RecipeForm handleSubmit={handleSubmit} /></Modal>}
     </>
     
   );

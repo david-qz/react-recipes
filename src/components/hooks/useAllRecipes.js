@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { getRecipes } from '../../services/recipes';
 
-export function useRecipes() {
+export function useAllRecipes() {
   const [recipes, setRecipes] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
@@ -20,5 +20,5 @@ export function useRecipes() {
     getRecipeList();
   }, []);
 
-  return { recipes, error, loading };
+  return { recipes, setRecipes, error, loading };
 }
