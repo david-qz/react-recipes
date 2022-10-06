@@ -11,7 +11,20 @@
   z-index: 40;
 }
 
-.modal {
-  display: inline-block;
-  position: static;
+.our-modal {
+  position: relative;
+}
+
+.close-button {
+  position: absolute;
+  background-color: #f14668;
+  top: -15px;
+  right: -15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.555);
+}
+.close-button:hover {
+  background-color: #ef2e55;
+}
+.close-button:focus {
+  background-color: #ef2e55;
 }

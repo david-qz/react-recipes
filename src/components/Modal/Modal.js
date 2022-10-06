@@ -8,7 +8,8 @@ export default function Modal({ children, handleClose }) {
 
   return (
     <div className='overlay' onClick={handleUserClickBackground}>
-      <div className="box modal">
+      <div className="box our-modal">
+        <button className='close-button delete is-large' onClick={handleClose}></button>
         {children}
       </div>
     </div>
