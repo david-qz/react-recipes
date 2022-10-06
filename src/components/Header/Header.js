@@ -1,3 +1,4 @@
+import './Header.css';
 import { NavLink } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 import { signOut } from '../../services/auth';
@@ -11,13 +12,13 @@ export default function Header() {
   };
 
   return (
-    <header>
-      <span>Recipes</span>
+    <header className='navbar is-warning'>
+      <span className='logo'>Recipes</span>
       {user
-        ? <button onClick={handleSignOut}>Sign Out</button>
-        : <div>
-          <NavLink to='/auth/sign-in'>Sign In</NavLink>
-          <NavLink to='/auth/sign-up'>Sign Up</NavLink>
+        ? <button className='button is-primary is-small' onClick={handleSignOut}>Sign Out</button>
+        : <div className='header-right'>
+          <NavLink className='navbar-item' to='/auth/sign-in'>Sign In</NavLink>
+          <NavLink className='navbar-item' to='/auth/sign-up'>Sign Up</NavLink>
         </div>}
     </header>
   );

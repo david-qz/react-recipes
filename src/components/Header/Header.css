@@ -1,0 +1,25 @@
+header {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: black;
+}
+
+.header-right {
+    display: flex;
+    gap: 5px;
+}
+
+header a {
+    border-radius: 5px;
+}
+
+.active {
+    text-decoration: underline;
+}
