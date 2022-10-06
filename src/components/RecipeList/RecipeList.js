@@ -3,7 +3,7 @@ import { useUser } from '../../context/UserContext';
 import { useAllRecipes } from '../hooks/useAllRecipes';
 import RecipeCard from '../RecipeCard/RecipeCard';
 
-export default function RecipeList({ recipes }) {
+export default function RecipeList({ recipes, handleEdit }) {
   const { user } = useUser();
   const { error, loading } = useAllRecipes();
 
@@ -14,7 +14,7 @@ export default function RecipeList({ recipes }) {
   return (
     <>
       <div className='recipe-list'>
-        {recipes.map((recipe) => <RecipeCard key={recipe.id} {...recipe} />)}
+        {recipes.map((recipe) => <RecipeCard key={recipe.id} {...recipe} handleEdit={handleEdit} />)}
       </div>
     </>
     

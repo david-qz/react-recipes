@@ -17,10 +17,10 @@ export async function addRecipe(data) {
   return checkError(response);
 }
 
-export async function getRecipeById(id) {
+export async function updateRecipe(id, data) {
   const response = await client
     .from('recipes')
-    .select()
+    .update(data)
     .match({ id })
     .single();
 
