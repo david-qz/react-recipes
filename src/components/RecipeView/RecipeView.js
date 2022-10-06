@@ -44,8 +44,12 @@ export default function RecipeView() {
     <div className='recipe-view'>
       <button onClick={() => setUserIsAddingRecipe(true)}>add recipe</button>
       <RecipeList recipes={recipes} handleEdit={beginEditingRecipe}></RecipeList>
-      {userIsAddingRecipe && <Modal><RecipeForm formTitle='Add a Recipe' handleSubmit={handleUserAddedRecipe} /></Modal>}
-      {userIsEditingRecipe && <Modal><RecipeForm formTitle='Edit a Recipe' handleSubmit={handleUserEditedRecipe} {...recipeBeingEdited}/></Modal>}
+      {userIsAddingRecipe && <Modal handleClose={() => setUserIsAddingRecipe(false)}>
+        <RecipeForm formTitle='Add a Recipe' handleSubmit={handleUserAddedRecipe} />
+      </Modal>}
+      {userIsEditingRecipe && <Modal handleClose={() => setUserIsEditingRecipe(false)}>
+        <RecipeForm formTitle='Edit a Recipe' handleSubmit={handleUserEditedRecipe} {...recipeBeingEdited}/>
+      </Modal>}
     </div>
   );
 }

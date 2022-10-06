@@ -31,9 +31,6 @@ export default function RecipeForm({ formTitle, handleSubmit, title = '', ingred
         <div className='control'>
           <button className='button is-link'>Submit</button>
         </div>
-        <div className='control'>
-          <button className='button is-link is-light'>Cancel</button>
-        </div>
       </div>
     </form>
   );
