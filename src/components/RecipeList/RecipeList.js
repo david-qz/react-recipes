@@ -3,6 +3,8 @@ import { useUser } from '../../context/UserContext';
 import { useAllRecipes } from '../hooks/useAllRecipes';
 import RecipeCard from '../RecipeCard/RecipeCard';
 
+import './RecipeList.css';
+
 export default function RecipeList({ recipes, handleEdit }) {
   const { user } = useUser();
   const { error, loading } = useAllRecipes();

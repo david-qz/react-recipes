@@ -1,0 +1,31 @@
+.recipe-card {
+  width: 350px;
+  height: 300px;
+  overflow: scroll;
+}
+
+.recipe-title {
+  font-weight: 600;
+}
+
+.subheading {
+  margin-bottom: 0;
+}
+
+.ingredients-heading, .instructions-heading {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+li::marker {
+  content: '◦';
+  font-weight: bold;
+  font-size: 18px;
+}
+
+li span {
+  position: relative;
+  left: 5px;
+}
