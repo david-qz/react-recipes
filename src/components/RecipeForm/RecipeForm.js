@@ -1,6 +1,6 @@
 import './RecipeForm.css';
 
-export default function RecipeForm({ title, handleSubmit }) {
+export default function RecipeForm({ formTitle, handleSubmit, title = '', ingredients = '', instructions = '' }) {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -14,18 +14,18 @@ export default function RecipeForm({ title, handleSubmit }) {
 
   return (
     <form className='recipe-form' onSubmit={handleFormSubmit}>
-      <p className='title'>{title}</p>
+      <p className='title'>{formTitle}</p>
       <div className='field'>
         <label className='label'>Title</label>
-        <input className='input' required name='title' />
+        <input className='input' required name='title' defaultValue={title} />
       </div>
       <div className='field'>
         <label className='label'>Ingredients</label>
-        <textarea className='textarea' required name='ingredients' />
+        <textarea className='textarea' required name='ingredients' defaultValue={ingredients} />
       </div>
       <div className='field'>
         <label className='label'>Instructions</label>
-        <textarea className='textarea' required name='instructions' />
+        <textarea className='textarea' required name='instructions' defaultValue={instructions} />
       </div>
       <div className='field is-grouped'>
         <div className='control'>

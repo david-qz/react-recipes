@@ -8,7 +8,7 @@ import RecipeList from '../RecipeList/RecipeList';
 export default function RecipeView() {
   const [userIsAddingRecipe, setUserIsAddingRecipe] = useState(false);
   const [userIsEditingRecipe, setUserIsEditingRecipe] = useState(false);
-  const [editedRecipeId, setEditedRecipeId] = useState(null);
+  const [recipeBeingEdited, setRecipeBeingEdited] = useState(null);
   const { recipes, setRecipes } = useAllRecipes();
 
   const handleUserAddedRecipe = async (recipeData) => {
@@ -24,18 +24,19 @@ export default function RecipeView() {
 
   const handleUserEditedRecipe = async (recipeData) => {
     try {
-      const editedRecipe = await updateRecipe(editedRecipeId, recipeData);
+      const editedRecipe = await updateRecipe(recipeBeingEdited.id, recipeData);
       setRecipes((prevRecipes) => prevRecipes.map(recipe => {
-        return recipe.id === editedRecipeId ? editedRecipe : recipe;
+        return recipe.id === editedRecipe.id ? editedRecipe : recipe;
       }));
       setUserIsEditingRecipe(false);
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.log(e);
     }
   };
 
   const beginEditingRecipe = (id) => {
-    setEditedRecipeId(id);
+    setRecipeBeingEdited(recipes.find((recipe) => recipe.id === id));
     setUserIsEditingRecipe(true);
   };
 
@@ -43,8 +44,8 @@ export default function RecipeView() {
     <div className='recipe-view'>
       <button onClick={() => setUserIsAddingRecipe(true)}>add recipe</button>
       <RecipeList recipes={recipes} handleEdit={beginEditingRecipe}></RecipeList>
-      {userIsAddingRecipe && <Modal><RecipeForm title='Add a Recipe' handleSubmit={handleUserAddedRecipe} /></Modal>}
-      {userIsEditingRecipe && <Modal><RecipeForm title='Edit a Recipe' handleSubmit={handleUserEditedRecipe} /></Modal>}
+      {userIsAddingRecipe && <Modal><RecipeForm formTitle='Add a Recipe' handleSubmit={handleUserAddedRecipe} /></Modal>}
+      {userIsEditingRecipe && <Modal><RecipeForm formTitle='Edit a Recipe' handleSubmit={handleUserEditedRecipe} {...recipeBeingEdited}/></Modal>}
     </div>
   );
 }
