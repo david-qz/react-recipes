@@ -1,7 +1,11 @@
+import './Modal.css';
+
 export default function Modal({ children }) {
   return (
-    <div>
-      {children}
+    <div className='overlay'>
+      <div className="box modal">
+        {children}
+      </div>
     </div>
   );
 }

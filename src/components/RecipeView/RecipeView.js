@@ -20,7 +20,7 @@ export default function RecipeView() {
   };
 
   return (
-    <div>
+    <div className='recipe-view'>
       <button onClick={() => setUserIsAddingRecipe(true)}>add recipe</button>
       <RecipeList recipes={recipes}></RecipeList>
       {userIsAddingRecipe && <Modal><RecipeForm handleSubmit={handleUserAddedRecipe} /></Modal>}
