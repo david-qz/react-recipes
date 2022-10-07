@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { addRecipe, updateRecipe } from '../../services/recipes';
+import { addRecipe, deleteRecipe, updateRecipe } from '../../services/recipes';
 import { useAllRecipes } from '../hooks/useAllRecipes';
 import Modal from '../Modal/Modal';
 import RecipeForm from '../RecipeForm/RecipeForm';
@@ -36,6 +36,18 @@ export default function RecipeView() {
     }
   };
 
+  const handleDeleteRecipe = async (id) => {
+    try {
+      await deleteRecipe(id);
+      setRecipes((prevRecipes) => prevRecipes.filter(recipe => {
+        return recipe.id !== id;
+      }));
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log(e);
+    }
+  };
+
   const beginEditingRecipe = (id) => {
     setRecipeBeingEdited(recipes.find((recipe) => recipe.id === id));
     setUserIsEditingRecipe(true);
@@ -44,7 +56,7 @@ export default function RecipeView() {
   return (
     <div className='recipe-view'>
       <button className='button is-primary' onClick={() => setUserIsAddingRecipe(true)}>Add Recipe</button>
-      <RecipeList recipes={recipes} handleEdit={beginEditingRecipe}></RecipeList>
+      <RecipeList recipes={recipes} handleEdit={beginEditingRecipe} handleDelete={handleDeleteRecipe}></RecipeList>
       {userIsAddingRecipe && <Modal handleClose={() => setUserIsAddingRecipe(false)}>
         <RecipeForm formTitle='Add a Recipe' handleSubmit={handleUserAddedRecipe} />
       </Modal>}

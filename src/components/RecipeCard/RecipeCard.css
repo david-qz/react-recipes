@@ -10,8 +10,17 @@
 }
 
 .recipe-card::-webkit-scrollbar {
-  -ms-overflow-style: none; 
-  scrollbar-width: none;  
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.recipe-card .button-container button {
+  margin-right: 10px;
+}
+
+.recipe-card .button-container {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .recipe-title {

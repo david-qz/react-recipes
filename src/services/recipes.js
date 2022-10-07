@@ -26,3 +26,13 @@ export async function updateRecipe(id, data) {
 
   return checkError(response);
 }
+
+export async function deleteRecipe(id) {
+  const response = await client
+    .from('recipes')
+    .delete()
+    .match({ id })
+    .single();
+
+  return checkError(response);
+}

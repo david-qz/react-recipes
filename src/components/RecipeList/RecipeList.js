@@ -5,7 +5,7 @@ import RecipeCard from '../RecipeCard/RecipeCard';
 
 import './RecipeList.css';
 
-export default function RecipeList({ recipes, handleEdit }) {
+export default function RecipeList({ recipes, handleEdit, handleDelete }) {
   const { user } = useUser();
   const { error, loading } = useAllRecipes();
 
@@ -16,9 +16,14 @@ export default function RecipeList({ recipes, handleEdit }) {
   return (
     <>
       <div className='recipe-list'>
-        {recipes.map((recipe) => <RecipeCard key={recipe.id} {...recipe} handleEdit={handleEdit} />)}
+        {recipes.map((recipe) => <RecipeCard
+          key={recipe.id}
+          {...recipe}
+          handleEdit={handleEdit}
+          handleDelete={handleDelete}
+        />)}
       </div>
     </>
-    
+
   );
 }

@@ -2,7 +2,7 @@ import { useUser } from '../../context/UserContext';
 
 import './RecipeCard.css';
 
-export default function RecipeCard({ id, user_id, title, ingredients, instructions, handleEdit }) {
+export default function RecipeCard({ id, user_id, title, ingredients, instructions, handleEdit, handleDelete }) {
   const { user } = useUser();
 
   return (
@@ -15,7 +15,11 @@ export default function RecipeCard({ id, user_id, title, ingredients, instructio
       </ul>
       <p className='instructions-heading'>Instructions</p>
       <p className='instructions'>{instructions}</p>
-      {user.id === user_id && <button className='button is-info' onClick={() => handleEdit(id)}>Edit</button>}
+      {user.id === user_id && <div className='button-container'>
+        <button className='button is-info' onClick={() => handleEdit(id)}>Edit</button>
+        <button className='button is-link' onClick={() => handleDelete(id)}>Delete</button>
+      </div>
+      }
     </div>
   );
 }
