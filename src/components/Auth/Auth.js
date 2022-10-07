@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 import { signIn, signUp } from '../../services/auth';
+import './Auth.css';
 
 export default function Auth() {
   const { method } = useParams();
@@ -32,12 +33,25 @@ export default function Auth() {
     return <Redirect to='/recipes' />;
   }
 
+  const methodName = method === 'sign-in' ? 'Sign In' : 'Sign Up';
+
   return (
-    <div>
+    <div className='box auth'>
+      <h2 className='title'>{methodName}</h2>
       <form onSubmit={handleSubmit}>
-        <input required placeholder='email' name='email'></input>
-        <input required placeholder='password' name='password' type='password'></input>
-        <button>submit</button>
+        <div className='field' >
+          <label htmlFor='email' className='label'>Email</label>
+          <input className='input' required placeholder='email' name='email'></input>
+        </div>
+        <div className='field'>
+          <label htmlFor='password' className='label'>Password</label>
+          <input className='input' required placeholder='password' name='password' type='password'></input>
+        </div>
+        <div className='field'>
+          <div className='control'>
+            <button className='button is-primary'>{methodName}</button>
+          </div>
+        </div>
       </form>
       {error && <h2>{error}</h2>}
     </div>

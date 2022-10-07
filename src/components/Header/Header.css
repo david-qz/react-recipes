@@ -3,12 +3,13 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: #7EB2DD;
 }
 
 .logo {
     font-size: 1.6rem;
     font-weight: bold;
-    color: black;
+    color: white;
 }
 
 .header-right {

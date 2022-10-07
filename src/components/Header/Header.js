@@ -12,13 +12,13 @@ export default function Header() {
   };
 
   return (
-    <header className='navbar is-warning'>
+    <header className='navbar is-info'>
       <span className='logo'>Recipes</span>
       {user
-        ? <button className='button is-primary is-small' onClick={handleSignOut}>Sign Out</button>
+        ? <button className='button is-primary' onClick={handleSignOut}>Sign Out</button>
         : <div className='header-right'>
-          <NavLink className='navbar-item' to='/auth/sign-in'>Sign In</NavLink>
-          <NavLink className='navbar-item' to='/auth/sign-up'>Sign Up</NavLink>
+          <NavLink className='button is-primary' to='/auth/sign-in'>Sign In</NavLink>
+          <NavLink className='button is-primary' to='/auth/sign-up'>Sign Up</NavLink>
         </div>}
     </header>
   );
