@@ -15,7 +15,7 @@ export default function RecipeCard({ id, user_id, title, ingredients, instructio
       </ul>
       <p className='instructions-heading'>Instructions</p>
       <p className='instructions'>{instructions}</p>
-      {user.id === user_id && <button onClick={() => handleEdit(id)}>Edit</button>}
+      {user.id === user_id && <button className='button is-info' onClick={() => handleEdit(id)}>Edit</button>}
     </div>
   );
 }

@@ -20,7 +20,7 @@ export default function RecipeForm({ formTitle, handleSubmit, title = '', ingred
         <input className='input' required name='title' defaultValue={title} />
       </div>
       <div className='field'>
-        <label className='label'>Ingredients</label>
+        <label className='label'>Ingredients (separated by a comma)</label>
         <textarea className='textarea' required name='ingredients' defaultValue={ingredients} />
       </div>
       <div className='field'>

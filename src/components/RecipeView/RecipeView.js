@@ -4,6 +4,7 @@ import { useAllRecipes } from '../hooks/useAllRecipes';
 import Modal from '../Modal/Modal';
 import RecipeForm from '../RecipeForm/RecipeForm';
 import RecipeList from '../RecipeList/RecipeList';
+import './RecipeView.css';
 
 export default function RecipeView() {
   const [userIsAddingRecipe, setUserIsAddingRecipe] = useState(false);
@@ -42,7 +43,7 @@ export default function RecipeView() {
 
   return (
     <div className='recipe-view'>
-      <button onClick={() => setUserIsAddingRecipe(true)}>add recipe</button>
+      <button className='button is-primary' onClick={() => setUserIsAddingRecipe(true)}>Add Recipe</button>
       <RecipeList recipes={recipes} handleEdit={beginEditingRecipe}></RecipeList>
       {userIsAddingRecipe && <Modal handleClose={() => setUserIsAddingRecipe(false)}>
         <RecipeForm formTitle='Add a Recipe' handleSubmit={handleUserAddedRecipe} />
