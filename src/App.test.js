@@ -128,3 +128,37 @@ it('authenticated users can add a recipe', async () => {
 
   await screen.findByText('New Recipe');
 });
+
+const mockUserRecipe = {
+  id: 4,
+  title: 'My Recipe',
+  ingredients: 'my ingredients',
+  instructions: 'my instructions',
+  user_id: mockUser.id
+};
+
+it('authorized users can delete their own recipes', async () => {
+  authFns.getUser.mockReturnValue(mockUser);
+  recipeFns.getRecipes.mockReturnValue([...mockRecipes, mockUserRecipe]);
+  recipeFns.deleteRecipe.mockReturnValue(mockUserRecipe);
+
+  render(
+    <MemoryRouter initialEntries={['/recipes']}>
+      <UserContextProvider>
+        <App />
+      </UserContextProvider>
+    </MemoryRouter>
+  );
+
+  await screen.findByText('My Recipe');
+  
+  const deleteButton = await screen.findByRole('button', { name: /delete/i });
+  expect(deleteButton).toBeInTheDocument();
+  await act(async () => {
+    fireEvent.click(deleteButton);
+  });
+
+  const userRecipeTitle = await screen.queryByText('My Recipe');
+  expect(userRecipeTitle).not.toBeInTheDocument();
+
+});
