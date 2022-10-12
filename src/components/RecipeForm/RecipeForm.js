@@ -13,19 +13,19 @@ export default function RecipeForm({ formTitle, handleSubmit, title = '', ingred
   };
 
   return (
-    <form className='recipe-form' onSubmit={handleFormSubmit}>
+    <form className='recipe-form' onSubmit={handleFormSubmit} aria-label={`${formTitle} form`}>
       <p className='title'>{formTitle}</p>
       <div className='field'>
-        <label className='label'>Title</label>
-        <input className='input' required name='title' defaultValue={title} />
+        <label className='label' htmlFor='title'>Title</label>
+        <input className='input' id='title' required name='title' defaultValue={title} />
       </div>
       <div className='field'>
-        <label className='label'>Ingredients (separated by a comma)</label>
-        <textarea className='textarea' required name='ingredients' defaultValue={ingredients} />
+        <label className='label' htmlFor='ingredients'>Ingredients (separated by a comma)</label>
+        <textarea className='textarea' id='ingredients' required name='ingredients' defaultValue={ingredients} />
       </div>
       <div className='field'>
-        <label className='label'>Instructions</label>
-        <textarea className='textarea' required name='instructions' defaultValue={instructions} />
+        <label className='label' htmlFor='instructions'>Instructions</label>
+        <textarea className='textarea' id='instructions' required name='instructions' defaultValue={instructions} />
       </div>
       <div className='field is-grouped'>
         <div className='control'>

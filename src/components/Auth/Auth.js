@@ -26,7 +26,7 @@ export default function Auth() {
     } catch (e) {
       setError(e.message);
     }
-    
+
   };
 
   if (user) {
@@ -38,14 +38,14 @@ export default function Auth() {
   return (
     <div className='box auth'>
       <h2 className='title'>{methodName}</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} aria-label={`${methodName} form`}>
         <div className='field' >
           <label htmlFor='email' className='label'>Email</label>
-          <input className='input' required placeholder='email' name='email'></input>
+          <input id="email" className='input' required placeholder='email' name='email'></input>
         </div>
         <div className='field'>
           <label htmlFor='password' className='label'>Password</label>
-          <input className='input' required placeholder='password' name='password' type='password'></input>
+          <input id="password" className='input' required placeholder='password' name='password' type='password'></input>
         </div>
         <div className='field'>
           <div className='control'>
