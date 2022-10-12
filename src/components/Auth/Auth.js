@@ -40,12 +40,12 @@ export default function Auth() {
       <h2 className='title'>{methodName}</h2>
       <form onSubmit={handleSubmit}>
         <div className='field' >
-          <label htmlFor='email' className='label'>Email</label>
-          <input className='input' required placeholder='email' name='email'></input>
+          <label id='email' htmlFor='email' className='label'>Email</label>
+          <input aria-labelledby='email' className='input' required placeholder='email' name='email'></input>
         </div>
         <div className='field'>
-          <label htmlFor='password' className='label'>Password</label>
-          <input className='input' required placeholder='password' name='password' type='password'></input>
+          <label id='password' htmlFor='password' className='label'>Password</label>
+          <input aria-labelledby='password' className='input' required placeholder='password' name='password' type='password'></input>
         </div>
         <div className='field'>
           <div className='control'>
