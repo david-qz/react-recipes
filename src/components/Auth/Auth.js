@@ -38,14 +38,14 @@ export default function Auth() {
   return (
     <div className='box auth'>
       <h2 className='title'>{methodName}</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} role='form'>
         <div className='field' >
           <label htmlFor='email' className='label'>Email</label>
-          <input className='input' required placeholder='email' name='email'></input>
+          <input className='input' required placeholder='email' name='email' id='email'></input>
         </div>
         <div className='field'>
           <label htmlFor='password' className='label'>Password</label>
-          <input className='input' required placeholder='password' name='password' type='password'></input>
+          <input className='input' required placeholder='password' name='password' id='password' type='password'></input>
         </div>
         <div className='field'>
           <div className='control'>
