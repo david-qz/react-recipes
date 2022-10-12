@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
+import { act } from 'react-dom/test-utils';
 import { MemoryRouter } from 'react-router-dom';
 import App from './App';
 import { UserContextProvider } from './context/UserContext';
@@ -82,3 +83,48 @@ it('authenticated users can see a list of recipes', async () => {
   await screen.findByText(/Mock Recipe 2/i);
 });
 
+const newMockRecipe = {
+  id: 3,
+  title: 'New Recipe',
+  ingredients: 'new ingredients',
+  instructions: 'new instructions'
+};
+
+it('authenticated users can add a recipe', async () => {
+  authFns.getUser.mockReturnValue(mockUser);
+  recipeFns.getRecipes.mockReturnValue(mockRecipes);
+  recipeFns.addRecipe.mockReturnValue(newMockRecipe);
+
+  render(
+    <MemoryRouter initialEntries={['/recipes']}>
+      <UserContextProvider>
+        <App />
+      </UserContextProvider>
+    </MemoryRouter>
+  );
+
+  const addRecipeButton = screen.getByRole('button', { name: 'Add Recipe' });
+  fireEvent.click(addRecipeButton);
+  
+  const titleInput = await screen.findByLabelText(/Title/i);
+  expect(titleInput).toBeInTheDocument();
+  fireEvent.change(titleInput, { value: newMockRecipe.title });
+
+  const ingredientsInput = await screen.findByLabelText('Ingredients (separated by a comma)');
+  expect(ingredientsInput).toBeInTheDocument();
+  fireEvent.change(ingredientsInput, { value: newMockRecipe.ingredients });
+
+  const instructionsInput = await screen.findByLabelText(/Instructions/i);
+  expect(instructionsInput).toBeInTheDocument();
+  fireEvent.change(instructionsInput, { value: newMockRecipe.instructions });
+
+  const submitButton = await screen.findByRole('button', { name: 'Submit' });
+  await act(async () => {
+    fireEvent.click(submitButton);
+  });
+
+  const recipeForm = await screen.queryByRole('form');
+  expect(recipeForm).not.toBeInTheDocument();
+
+  await screen.findByText('New Recipe');
+});
