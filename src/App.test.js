@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
+import { act } from 'react-dom/test-utils';
 import { MemoryRouter } from 'react-router-dom';
 import App from './App';
 import { UserContextProvider } from './context/UserContext';
@@ -105,13 +106,35 @@ it('signed in user should see edit and delete buttons on their recipes', async (
     </UserContextProvider>
   );
 
-  const postOne = await screen.findByText('sock shoe belt stirfry');
+  const postOne = await screen.findByText(/sock shoe belt stirfry/i);
   expect(postOne).toBeInTheDocument();
   
-  const editButton = await screen.findByText('Edit');
-  const deleteButton = await screen.findByText('Delete');
+  const editButton = await screen.findByText(/edit/i);
+  const deleteButton = await screen.findByText(/delete/i);
 
   expect(editButton).toBeInTheDocument();
   expect(deleteButton).toBeInTheDocument();
+
+});
+
+it('signed in user should be able to delete their own recipes', async () => {
+  authFuncs.getUser.mockReturnValue(mockUser);
+  recipeFuncs.getRecipes.mockReturnValue(fakeRecipes);
+  recipeFuncs.deleteRecipe.mockReturnValue(null);
+
+  render(
+    <UserContextProvider>
+      <MemoryRouter initialEntries={['/recipes']}>
+        <App />
+      </MemoryRouter>
+    </UserContextProvider>
+  );
+
+  const deleteButton = await screen.findByText(/delete/i);
+  await act(async () => {
+    fireEvent.click(deleteButton);
+  });
+
+  expect(recipeFuncs.deleteRecipe).toBeCalled();
 
 });
