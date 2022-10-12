@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import { UserContextProvider } from './context/UserContext';
@@ -48,7 +48,7 @@ const mockRecipes = [
     id: 1,
     title: 'beans and rice',
     ingredients: 'beans, rice',
-    user_id: 0
+    user_id: '2fd26557-bf20-4d12-b187-22c6cec3dd54'
   },
 ];
 
@@ -66,4 +66,25 @@ test('user can see a list of recipes', async () => {
 
   await screen.findByText(/pork curry/i);
   await screen.findByText(/beans and rice/i);
+});
+
+test('user can delete their own recipes', async () => {
+  AuthService.getUser.mockReturnValue(mockUser);
+  RecipesService.getRecipes.mockReturnValue(mockRecipes);
+  RecipesService.deleteRecipe.mockReturnValue(null);
+
+  render(
+    <BrowserRouter initialEntries={['/recipes']}>
+      <UserContextProvider>
+        <App />
+      </UserContextProvider>
+    </BrowserRouter>
+  );
+
+  const deleteButton = await screen.findByText(/delete/i);
+  await act(async () => {
+    fireEvent.click(deleteButton);
+  });
+
+  expect(RecipesService.deleteRecipe).toBeCalled();
 });
