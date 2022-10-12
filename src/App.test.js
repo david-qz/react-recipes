@@ -123,7 +123,7 @@ it('authenticated users can add a recipe', async () => {
     fireEvent.click(submitButton);
   });
 
-  const recipeForm = await screen.queryByRole('form');
+  const recipeForm = screen.queryByRole('form');
   expect(recipeForm).not.toBeInTheDocument();
 
   await screen.findByText('New Recipe');
@@ -151,14 +151,58 @@ it('authorized users can delete their own recipes', async () => {
   );
 
   await screen.findByText('My Recipe');
-  
+
   const deleteButton = await screen.findByRole('button', { name: /delete/i });
   expect(deleteButton).toBeInTheDocument();
   await act(async () => {
     fireEvent.click(deleteButton);
   });
 
-  const userRecipeTitle = await screen.queryByText('My Recipe');
+  const userRecipeTitle = screen.queryByText('My Recipe');
   expect(userRecipeTitle).not.toBeInTheDocument();
+});
+
+it('authorized users can update their own recipes', async () => {
+  authFns.getUser.mockReturnValue(mockUser);
+  recipeFns.getRecipes.mockReturnValue([...mockRecipes, mockUserRecipe]);
+  recipeFns.updateRecipe.mockReturnValue({ ...mockUserRecipe, title: 'My Updated Recipe' });
+
+  render(
+    <MemoryRouter initialEntries={['/recipes']}>
+      <UserContextProvider>
+        <App />
+      </UserContextProvider>
+    </MemoryRouter>
+  );
+
+  await screen.findByText('My Recipe');
+
+  const editButton = await screen.findByRole('button', { name: /edit/i });
+  await act(async () => {
+    fireEvent.click(editButton);
+  });
+
+  const updateForm = await screen.findByRole('form');
+  expect(updateForm).toBeInTheDocument();
+
+  const titleInput = screen.getByLabelText(/title/i);
+  fireEvent.change(titleInput, { value: 'My Updated Recipe' });
+  
+  const ingredientInput = screen.getByLabelText('Ingredients (separated by a comma)');
+  fireEvent.change(ingredientInput, { value: mockUserRecipe.ingredients });
+
+  const instructionInput = screen.getByLabelText(/instructions/i);
+  fireEvent.change(instructionInput, { value: mockUserRecipe.instructions });
+
+  const submitButton = screen.getByRole('button', { name: /Submit/i });
+  await act(async () => {
+    fireEvent.click(submitButton);
+  });
+
+  await screen.findByText('My Updated Recipe');
+  const previousTitle = screen.queryByText('My Recipe');
+  expect(previousTitle).not.toBeInTheDocument();
 
 });
+
+
