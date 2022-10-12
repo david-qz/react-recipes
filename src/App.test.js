@@ -88,3 +88,36 @@ test('user can delete their own recipes', async () => {
 
   expect(RecipesService.deleteRecipe).toBeCalled();
 });
+
+test('user can edit their own recipes', async () => {
+  AuthService.getUser.mockReturnValue(mockUser);
+  RecipesService.getRecipes.mockReturnValue(mockRecipes);
+  RecipesService.updateRecipe.mockReturnValue({
+    id: 1,
+    title: 'plain beans and rice',
+    ingredients: 'beans, rice',
+    user_id: '2fd26557-bf20-4d12-b187-22c6cec3dd54'
+  });
+
+  render(
+    <BrowserRouter initialEntries={['/recipes']}>
+      <UserContextProvider>
+        <App />
+      </UserContextProvider>
+    </BrowserRouter>
+  );
+
+  const editButton = await screen.findByText(/edit/i);
+  await act(async () => {
+    fireEvent.click(editButton);
+  });
+
+  const editForm = await screen.findByRole('form');
+  await act(async () => {
+    fireEvent.submit(editForm);
+  });
+
+  expect(RecipesService.updateRecipe).toBeCalled();
+  expect(editForm).not.toBeInTheDocument();
+  await screen.findByText(/plain beans and rice/i);
+});
