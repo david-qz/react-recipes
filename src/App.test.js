@@ -1,11 +1,13 @@
-import { findByRole, fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import App from './App';
 import { UserContextProvider } from './context/UserContext';
 
 import * as authFns from './services/auth';
+import * as recipeFns from './services/recipes';
 
 jest.mock('./services/auth');
+jest.mock('./services/recipes');
 
 const mockUser = {
   email: 'example@exam.ple',
@@ -14,7 +16,7 @@ const mockUser = {
   id: '27'
 };
 
-test('users can sign in', async () => {
+it('users can sign in', async () => {
 
   authFns.getUser.mockReturnValue(null);
   authFns.signIn.mockReturnValue(mockUser);
@@ -47,3 +49,36 @@ test('users can sign in', async () => {
   expect(signOutButton).toBeInTheDocument();
 
 });
+
+const mockRecipes = [
+  {
+    id: 1,
+    title: 'Mock Recipe 1',
+    ingredients: 'ingredient 1, ingredient 2',
+    instructions: 'instructions 1'
+  },
+  {
+    id: 2,
+    title: 'Mock Recipe 2',
+    ingredients: 'ingredient 3, ingredient 4',
+    instructions: 'instructions 2'
+  }
+];
+
+it('authenticated users can see a list of recipes', async () => {
+  authFns.getUser.mockReturnValue(mockUser);
+  recipeFns.getRecipes.mockReturnValue(mockRecipes);
+  render(
+    <MemoryRouter initialEntries={['/recipes']}>
+      <UserContextProvider>
+        <App />
+      </UserContextProvider>
+    </MemoryRouter>
+  );
+
+  await screen.findByText(/Mock Recipe 1/i);
+  await screen.findByText(/ingredient 1/i);
+  await screen.findByText(/instructions 1/i);
+  await screen.findByText(/Mock Recipe 2/i);
+});
+
