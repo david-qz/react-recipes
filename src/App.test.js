@@ -205,4 +205,23 @@ it('authorized users can update their own recipes', async () => {
 
 });
 
+it('users can sign out', async () => {
+  authFns.getUser.mockReturnValue(mockUser);
+  authFns.signOut.mockReturnValue(null);
+  recipeFns.getRecipes.mockReturnValue(mockRecipes);
+
+  render(
+    <MemoryRouter initialEntries={['/recipes']}>
+      <UserContextProvider>
+        <App />
+      </UserContextProvider>
+    </MemoryRouter>
+  );
+
+  const signOutButton = screen.getByText(/sign out/i);
+  fireEvent.click(signOutButton);
+
+  await screen.findByRole('form');
+  await screen.findAllByText(/Sign in/i);
+});
 

@@ -38,7 +38,7 @@ export default function Auth() {
   return (
     <div className='box auth'>
       <h2 className='title'>{methodName}</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} role='form'>
         <div className='field' >
           <label htmlFor='email' className='label'>Email</label>
           <input className='input' required placeholder='email' name='email' id='email'></input>
